@@ -22,7 +22,7 @@ export default function FavoriteSong() {
     playerRef.current = new window.YT.Player('youtube-player-final', {
       height: '0',
       width: '0',
-      videoId: '9btPvZdVRWY',
+      videoId: '5ptdEemGjrQ', // UPDATE: ID Video Baru
       playerVars: { 
         'autoplay': 0, 
         'controls': 0, 
@@ -97,22 +97,18 @@ export default function FavoriteSong() {
   };
 
   return (
-    // Max-width ditambah (lebar), scale dihilangkan agar ukuran elemen dalam pas (perkecil sedikit)
     <div className="flex flex-col gap-6 w-full max-w-[950px] mx-auto my-10 px-4">
       
-      {/* Label Atas */}
       <div className="flex items-center gap-3 px-2">
         <div className={`w-2 h-2 rounded-full ${isPlaying ? 'bg-red-500 animate-pulse' : 'bg-zinc-600'}`}></div>
         <span className="text-[10px] uppercase tracking-[0.5em] text-zinc-500 font-bold">Favorite Song</span>
       </div>
 
-      {/* Container Utama - Dibuat lebih slim secara vertikal tapi lebar ke samping */}
       <div className="relative overflow-hidden rounded-[40px] bg-[#121212]/80 border border-zinc-800/50 backdrop-blur-2xl p-6 md:p-10 shadow-2xl">
         <div id="youtube-player-final" className="hidden"></div>
 
         <div className="flex flex-col md:flex-row items-center gap-10 md:gap-14">
           
-          {/* Cover Art - Ukuran disesuaikan agar tidak terlalu dominan */}
           <div className="relative w-48 h-48 md:w-56 md:h-56 flex-shrink-0">
             <img 
               src="/foto/music.png" 
@@ -121,16 +117,14 @@ export default function FavoriteSong() {
             />
           </div>
 
-          {/* Player Controls Section */}
           <div className="flex-1 w-full space-y-6">
             
-            {/* Info Lagu */}
+            {/* UPDATE: Info Lagu Baru */}
             <div className="text-center md:text-left">
-              <h3 className="text-3xl font-bold text-white tracking-tighter">Love Anthem</h3>
-              <p className="text-zinc-500 text-xs font-bold uppercase tracking-[0.3em] mt-2">LyoraChay · BrianVal · MW</p>
+              <h3 className="text-3xl font-bold text-white tracking-tighter">A Thousand Years</h3>
+              <p className="text-zinc-500 text-xs font-bold uppercase tracking-[0.3em] mt-2">John Michael Howell · JVKE · ZVC</p>
             </div>
 
-            {/* Progress Bar Area */}
             <div className="space-y-3">
               <input 
                 type="range" min="0" max={duration || 100} value={currentTime} onChange={handleSeek} 
@@ -142,7 +136,6 @@ export default function FavoriteSong() {
               </div>
             </div>
 
-            {/* Center Controls - Tombol Play di Tengah */}
             <div className="flex flex-col items-center gap-6">
               <div className="flex items-center gap-10">
                 <button className="text-zinc-600 hover:text-white transition-colors">
@@ -165,7 +158,6 @@ export default function FavoriteSong() {
                 </button>
               </div>
 
-              {/* Volume Slider */}
               <div className="flex items-center gap-3 w-full max-w-[180px] group opacity-60 hover:opacity-100 transition-opacity">
                 <svg width="14" height="14" fill="currentColor" className="text-zinc-500 group-hover:text-white" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
                 <input 
