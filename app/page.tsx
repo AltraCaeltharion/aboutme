@@ -25,7 +25,7 @@ export default function Home() {
             </div>
 
             <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-white leading-[0.9]">
-              BARDAN<span className="text-blue-600">.</span>
+              Altra Caeltharion<span className="text-blue-600">.</span>
             </h1>
 
             <p className="max-w-md text-zinc-400 text-sm md:text-lg leading-relaxed font-light">
@@ -148,7 +148,7 @@ export default function Home() {
           </div>
           <footer className="mt-32">
             <p className="text-[9px] uppercase tracking-[0.8em] text-zinc-800 font-black">
-              © {new Date().getFullYear()} BARDAN1172
+              © {new Date().getFullYear()} Altra Caeltharion
             </p>
           </footer>
         </div>
