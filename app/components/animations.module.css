@@ -1,0 +1,80 @@
+/* animations.module.css */
+
+.fadeInUp {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fadeInUpActive {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hoverScale {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hoverScale:hover {
+  transform: scale(1.03) translateY(-5px);
+  filter: brightness(1.2);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes shoot {
+  0%,
+  10% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(-35deg);
+  }
+  14% {
+    opacity: 1;
+  }
+  26% {
+    opacity: 0;
+    transform: translate(-55vw, 40vh) rotate(-35deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-55vw, 40vh) rotate(-35deg);
+  }
+}
+
+.shootingStar {
+  position: absolute;
+  top: 12%;
+  right: 10%;
+  width: 130px;
+  height: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+  transform: rotate(-35deg);
+  animation: shoot 8s ease-in-out infinite;
+}

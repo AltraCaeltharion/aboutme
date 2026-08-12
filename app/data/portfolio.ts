@@ -17,6 +17,7 @@ export const projects: Project[] = [
   {
     title: "Selene Shop",
     href: "https://seleneshop.my.id",
+    image: "/foto/seleneshop.png",
     description:
       "Platform belanja online dengan pengalaman pengguna modern dan cepat. Jelajahi koleksi produk terbaru.",
   },
