@@ -1,11 +1,38 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
+import Image from "next/image";
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+
+interface YTPlayer {
+  getDuration(): number;
+  getCurrentTime(): number;
+  setVolume(volume: number): void;
+  pauseVideo(): void;
+  playVideo(): void;
+  seekTo(seconds: number, allowSeekAhead: boolean): void;
+  destroy(): void;
+}
+
+interface YTPlayerOptions {
+  height: string;
+  width: string;
+  videoId: string;
+  playerVars: Record<string, string | number>;
+  events: {
+    onReady?: (event: { target: YTPlayer }) => void;
+    onStateChange?: (event: { data: number }) => void;
+  };
+}
+
+interface YTAPI {
+  Player: new (elementId: string, options: YTPlayerOptions) => YTPlayer;
+  PlayerState: { PLAYING: number };
+}
 
 declare global {
   interface Window {
-    onYouTubeIframeAPIReady: () => void;
-    YT: any;
+    onYouTubeIframeAPIReady?: () => void;
+    YT?: YTAPI;
   }
 }
 
@@ -14,33 +41,33 @@ export default function FavoriteSong() {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(100);
-  const playerRef = useRef<any>(null);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const playerRef = useRef<YTPlayer | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const initPlayer = () => {
-    if (playerRef.current) return;
+  const initPlayer = useCallback(() => {
+    if (playerRef.current || !window.YT) return;
     playerRef.current = new window.YT.Player('youtube-player-final', {
       height: '0',
       width: '0',
       videoId: '5ptdEemGjrQ', // UPDATE: ID Video Baru
-      playerVars: { 
-        'autoplay': 0, 
-        'controls': 0, 
+      playerVars: {
+        'autoplay': 0,
+        'controls': 0,
         'modestbranding': 1,
         'rel': 0,
-        'origin': typeof window !== 'undefined' ? window.location.origin : ''
+        'origin': window.location.origin
       },
       events: {
-        onReady: (event: any) => {
+        onReady: (event) => {
           setDuration(event.target.getDuration());
           event.target.setVolume(volume);
         },
-        onStateChange: (event: any) => {
-          setIsPlaying(event.data === window.YT.PlayerState.PLAYING);
+        onStateChange: (event) => {
+          setIsPlaying(event.data === window.YT?.PlayerState.PLAYING);
         }
       }
     });
-  };
+  }, [volume]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -71,11 +98,15 @@ export default function FavoriteSong() {
         playerRef.current = null;
       }
     };
-  }, []);
+  }, [initPlayer]);
 
   const handleTogglePlay = () => {
     if (!playerRef.current) return;
-    isPlaying ? playerRef.current.pauseVideo() : playerRef.current.playVideo();
+    if (isPlaying) {
+      playerRef.current.pauseVideo();
+    } else {
+      playerRef.current.playVideo();
+    }
   };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,16 +141,17 @@ export default function FavoriteSong() {
         <div className="flex flex-col md:flex-row items-center gap-10 md:gap-14">
           
           <div className="relative w-48 h-48 md:w-56 md:h-56 flex-shrink-0">
-            <img 
+            <Image 
               src="/foto/music.png" 
               alt="Cover Art" 
-              className={`relative w-full h-full object-cover rounded-[30px] border border-zinc-800 transition-all duration-700 shadow-xl ${isPlaying ? 'scale-105' : 'scale-100'}`}
+              fill
+              sizes="(min-width: 768px) 224px, 192px"
+              className={`object-cover rounded-[30px] border border-zinc-800 transition-all duration-700 shadow-xl ${isPlaying ? 'scale-105' : 'scale-100'}`}
             />
           </div>
 
           <div className="flex-1 w-full space-y-6">
             
-            {/* UPDATE: Info Lagu Baru */}
             <div className="text-center md:text-left">
               <h3 className="text-3xl font-bold text-white tracking-tighter">A Thousand Years</h3>
               <p className="text-zinc-500 text-xs font-bold uppercase tracking-[0.3em] mt-2">John Michael Howell · JVKE · ZVC</p>

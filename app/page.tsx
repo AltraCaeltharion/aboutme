@@ -3,6 +3,7 @@ import Identity from './components/Identity';
 import MyProject from './components/MyProject';
 import Soundtrack from './components/Soundtrack';
 import Connect from './components/Connect';
+import Footer from './components/Footer';
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <MyProject />
       <Soundtrack />
       <Connect />
+      <Footer />
     </main>
   );
 }

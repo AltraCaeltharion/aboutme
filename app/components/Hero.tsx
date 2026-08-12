@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import { motion } from "framer-motion";
+import { profile, skills } from '../data/portfolio';
 
 export default function Hero() {
   return (
@@ -15,15 +16,15 @@ export default function Hero() {
           </div>
 
           <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-white leading-[0.9]">
-            Altra Caeltharion<span className="text-blue-600">.</span>
+            {profile.name}<span className="text-blue-600">.</span>
           </h1>
 
           <p className="max-w-md text-zinc-400 text-sm md:text-lg leading-relaxed font-light">
-            Every idea is an opportunity to create something great. I focus on building scalable, fast, and impactful web applications.
+            {profile.intro}
           </p>
 
           <div className="flex flex-wrap justify-center md:justify-start gap-2 pt-2">
-            {['Next.js', 'React.js', 'Tailwind', 'Node.js'].map((skill) => (
+            {skills.map((skill) => (
               <span key={skill} className="px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest bg-zinc-900 border border-zinc-800 rounded-full text-zinc-500 hover:text-white hover:border-zinc-600 transition-all cursor-default">
                 {skill}
               </span>
