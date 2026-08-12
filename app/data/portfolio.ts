@@ -10,6 +10,7 @@ export interface Project {
   title: string;
   href: string;
   description: string;
+  image?: string;
 }
 
 export const projects: Project[] = [
