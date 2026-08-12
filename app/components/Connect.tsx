@@ -3,7 +3,7 @@ import { socialLinks } from '../data/portfolio';
 
 export default function Connect() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center p-6 py-32 relative">
+    <section id="contact" className="min-h-screen flex flex-col items-center justify-center p-6 py-32 relative">
       <div className="max-w-4xl w-full text-center">
         <SectionHeader label="Get In Touch" align="center" className="mb-16" withLine={false} />
         <div className="grid grid-cols-2 md:grid-cols-3 gap-5">

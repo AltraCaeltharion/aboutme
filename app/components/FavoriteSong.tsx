@@ -49,7 +49,7 @@ export default function FavoriteSong() {
     playerRef.current = new window.YT.Player('youtube-player-final', {
       height: '0',
       width: '0',
-      videoId: '5ptdEemGjrQ', // UPDATE: ID Video Baru
+      videoId: 'qsM0NPkiqwg',
       playerVars: {
         'autoplay': 0,
         'controls': 0,
@@ -121,6 +121,15 @@ export default function FavoriteSong() {
     playerRef.current?.setVolume(v);
   };
 
+  const handleSkip = (seconds: number) => {
+    if (!playerRef.current) return;
+    const current = playerRef.current.getCurrentTime();
+    const total = playerRef.current.getDuration();
+    const next = Math.min(Math.max(current + seconds, 0), total);
+    playerRef.current.seekTo(next, true);
+    setCurrentTime(next);
+  };
+
   const formatTime = (time: number) => {
     const min = Math.floor(time / 60);
     const sec = Math.floor(time % 60);
@@ -153,8 +162,8 @@ export default function FavoriteSong() {
           <div className="flex-1 w-full space-y-6">
             
             <div className="text-center md:text-left">
-              <h3 className="text-3xl font-bold text-white tracking-tighter">A Thousand Years</h3>
-              <p className="text-zinc-500 text-xs font-bold uppercase tracking-[0.3em] mt-2">John Michael Howell · JVKE · ZVC</p>
+              <h3 className="text-3xl font-bold text-white tracking-tighter">Singgah Sebentar</h3>
+              <p className="text-zinc-500 text-xs font-bold uppercase tracking-[0.3em] mt-2">Altra Caeltharion</p>
             </div>
 
             <div className="space-y-3">
@@ -170,7 +179,7 @@ export default function FavoriteSong() {
 
             <div className="flex flex-col items-center gap-6">
               <div className="flex items-center gap-10">
-                <button className="text-zinc-600 hover:text-white transition-colors">
+                <button onClick={() => handleSkip(-10)} className="text-zinc-600 hover:text-white transition-colors" aria-label="Mundur 10 detik">
                   <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
                 </button>
                 
@@ -185,7 +194,7 @@ export default function FavoriteSong() {
                   )}
                 </button>
 
-                <button className="text-zinc-600 hover:text-white transition-colors">
+                <button onClick={() => handleSkip(10)} className="text-zinc-600 hover:text-white transition-colors" aria-label="Maju 10 detik">
                   <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="m6 18 8.5-6L6 6zM16 6h2v12h-2z"/></svg>
                 </button>
               </div>

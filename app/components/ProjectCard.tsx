@@ -1,27 +1,18 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import type { Project } from "../data/portfolio";
 
 export default function ProjectCard({ project }: { project: Project }) {
+  const [detailsOpen, setDetailsOpen] = useState(false);
+
   return (
     <article className="group relative">
       <div className="rounded-2xl bg-gradient-to-b from-violet-600/40 via-indigo-900/25 to-zinc-800/40 p-px opacity-70 transition-all duration-500 group-hover:opacity-100">
         <div className="flex h-full flex-col overflow-hidden rounded-[15px] bg-[#0a0a0d] transition-shadow duration-500 group-hover:shadow-[0_0_40px_rgba(139,92,246,0.15)]">
           <div className="relative aspect-video w-full overflow-hidden">
-            {project.image ? (
-              <Image
-                src={project.image}
-                alt={`Screenshot ${project.title}`}
-                fill
-                sizes="(min-width: 1024px) 33vw, 100vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-600/25 via-zinc-900 to-indigo-950">
-                <span className="text-4xl font-black text-violet-500/50">
-                  {project.title.charAt(0)}
-                </span>
-              </div>
-            )}
+            <ProjectThumb project={project} />
           </div>
 
           <div className="flex flex-1 flex-col gap-3 p-5">
@@ -47,7 +38,10 @@ export default function ProjectCard({ project }: { project: Project }) {
                 </svg>
               </a>
 
-              <button className="inline-flex items-center gap-2 rounded-lg border border-violet-500/50 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-violet-400 transition-all duration-300 hover:border-transparent hover:bg-gradient-to-r hover:from-violet-600 hover:to-indigo-950 hover:text-white">
+              <button
+                onClick={() => setDetailsOpen(true)}
+                className="inline-flex items-center gap-2 rounded-lg border border-violet-500/50 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-violet-400 transition-all duration-300 hover:border-transparent hover:bg-gradient-to-r hover:from-violet-600 hover:to-indigo-950 hover:text-white"
+              >
                 Details
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <line x1="5" y1="12" x2="19" y2="12" />
@@ -58,6 +52,94 @@ export default function ProjectCard({ project }: { project: Project }) {
           </div>
         </div>
       </div>
+
+      {detailsOpen && (
+        <ProjectDetailsModal project={project} onClose={() => setDetailsOpen(false)} />
+      )}
     </article>
+  );
+}
+
+function ProjectThumb({ project }: { project: Project }) {
+  if (project.image) {
+    return (
+      <Image
+        src={project.image}
+        alt={`Screenshot ${project.title}`}
+        fill
+        sizes="(min-width: 1024px) 33vw, 100vw"
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+    );
+  }
+  return (
+    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-600/25 via-zinc-900 to-indigo-950">
+      <span className="text-4xl font-black text-violet-500/50">
+        {project.title.charAt(0)}
+      </span>
+    </div>
+  );
+}
+
+function ProjectDetailsModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  useEffect(() => {
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true">
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative w-full max-w-xl overflow-hidden rounded-2xl bg-gradient-to-b from-violet-500/50 via-indigo-900/40 to-zinc-800/40 p-px">
+        <div className="overflow-hidden rounded-[15px] bg-[#0a0a0d]">
+          <div className="relative aspect-video w-full">
+            <ProjectThumb project={project} />
+          </div>
+
+          <div className="p-6">
+            <div className="flex items-start justify-between gap-4">
+              <h3 className="text-xl font-bold tracking-tight text-white">
+                {project.title}
+              </h3>
+              <button
+                onClick={onClose}
+                aria-label="Tutup detail"
+                className="rounded-full border border-zinc-800 p-2 text-zinc-400 transition-colors hover:border-violet-500/50 hover:text-white"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+
+            <p className="mt-4 text-sm leading-relaxed text-zinc-400">
+              {project.description}
+            </p>
+
+            <a
+              href={project.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-violet-600 to-indigo-950 px-5 py-2.5 text-[10px] font-black uppercase tracking-widest text-white transition-opacity hover:opacity-90"
+            >
+              View Live
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
