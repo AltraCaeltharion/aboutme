@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 // Judul Tab Browser dan Deskripsi SEO diatur di sini
 export const metadata: Metadata = {
-  title: "Bardan1172 Portofolio",
+  title: "AltraDev Portfolio",
   description: "A song that always inspires and brings good vibes",
 };
 
