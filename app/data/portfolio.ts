@@ -32,39 +32,21 @@ export interface SocialLink {
 
 export const socialLinks: SocialLink[] = [
   {
-    href: "https://discord.gg/invite-code",
-    title: "Discord",
-    subtitle: "Bocah Ronda",
-    color: "hover:border-indigo-600",
-  },
-  {
-    href: "https://github.com/Bardan1172",
-    title: "Github",
-    subtitle: "Repositories",
-    color: "hover:border-white",
-  },
-  {
-    href: "https://youtube.com/@bardan1172",
-    title: "Youtube",
-    subtitle: "Video Content",
-    color: "hover:border-red-600",
-  },
-  {
-    href: "https://www.instagram.com/bardan_1172/",
-    title: "Instagram",
-    subtitle: "Daily Life",
-    color: "hover:border-pink-600",
-  },
-  {
-    href: "https://trakteer.id/bardan1172/tip",
-    title: "Trakteer",
-    subtitle: "Support Me",
-    color: "hover:border-yellow-600",
+    href: "#",
+    title: "Send Transmission",
+    subtitle: "Contact",
+    color: "hover:border-violet-600",
   },
   {
     href: "#",
-    title: "Heppy Cloud",
-    subtitle: "Cloud Service",
-    color: "hover:border-cyan-600",
+    title: "Public Log / Comments",
+    subtitle: "Feedback",
+    color: "hover:border-emerald-600",
+  },
+  {
+    href: "https://discord.gg/invite-code",
+    title: "Social Connection",
+    subtitle: "Discord",
+    color: "hover:border-indigo-600",
   },
 ];
